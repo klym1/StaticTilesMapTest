@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>All buildings in the Netherlands, shaded by year of construction</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" href="/buildings/style.css" />
+	<link rel="stylesheet" href="/buildings/leaflet/leaflet.css" />
+	<script src="/buildings/d3.v3.min.js"></script>
+	<script src="/buildings/leaflet/leaflet.js"></script>
+</head>
+<body>
+	<div class="map" id="map"></div>
+  <span id="close" class="close"></span>
+  <div id="box">
+    <div>
+      <div id="info">
+        <h2>Info</h2>
+        <p>All 9,866,539 <a href="http://www.kadaster.nl/documents/20838/87954/BAG+objectenhandboek+2009+inclusief+besluiten+zorg-+en+studentencomplexen/389eb2fe-1c0f-450e-a56e-cac1b88d4111">buildings</a> in the Netherlands, shaded according to year of construction. Data from <a href="http://www.kadaster.nl/bag">BAG</a> (January 2015), via <a href="http://citysdk.waag.org/">CitySDK LD API</a>. Map made with <a href="http://www.mapbox.com/tilemill/">TileMill</a> by <b><a href="https://twitter.com/bertspaan">Bert Spaan</a>, <a href="http://waag.org/">Waag Society</a></b>, inspired by <a href="http://bklynr.com/block-by-block-brooklyns-past-and-present/">BKLYNR</a>. Map errors can be reported on the <a href="http://www.kadaster.nl/web/Themas/Registraties/BAG/BAGartikelen/BAG-terugmelden.htm">Kadaster's website</a>.</p>
+        <p>The source code and TileMill project can be found on <a href="https://github.com/waagsociety/buildings">GitHub</a>. High-res prints are available in <a href="http://waagsociety.werkaandemuur.nl/">our web shop</a>.</p>
+      </div>
+      <div id="legend">
+        <h2>Legend</h2>
+        <table>
+          <tr><td class="key color1"></td><td class="value first">&lt; 1800</td>   <td class="key color7"></td><td class="value">1960 - 1975</td></tr>
+          <tr><td class="key color2"></td><td class="value first">1800 - 1850</td> <td class="key color8"></td><td class="value">1975 - 1985</td></tr>
+          <tr><td class="key color3"></td><td class="value first">1850 - 1900</td> <td class="key color9"></td><td class="value">1985 - 1995</td></tr>
+          <tr><td class="key color4"></td><td class="value first">1900 - 1930</td> <td class="key color10"></td><td class="value">1995 - 2005</td></tr>
+          <tr><td class="key color5"></td><td class="value first">1930 - 1945</td> <td class="key color11"></td><td class="value">&gt; 2005</td></tr>
+          <tr><td class="key color6"></td><td class="value first">1945 - 1960</td> <td></td><td></td></tr>
+        </table>
+      </div>
+      
+      <div id="waag">
+        <a href="#48.923,24.7119,16"><img src="/buildings/images/waag.png" /></a>
+      </div>
+    </div>
+  <div>
+
+	<script>
+    var disableHashChange = false;
+    var map = L.map('map');
+    var tileUrl = "https://map.klym.uk/buildings/tiles/{z}/{x}/{y}.png";
+
+		L.tileLayer(tileUrl, {
+      attributionControl: false,
+			minZoom: 15,
+			maxZoom: 20
+		}).addTo(map);
+
+    map.setMaxBounds([
+      [48.9313,24.7254],
+      [48.9078,24.6889]
+    ]);
+
+    map.setView([48.9228, 24.7103], 16);
+
+    map.on('moveend', function(e) {
+      var lat = roundLatLon(map.getCenter().lat);
+      var lon = roundLatLon(map.getCenter().lng);
+      var zoom = map.getZoom();
+
+      disableHashChange = true;
+      window.location.hash = [lat, lon, zoom].join(",");
+    });
+
+    map.on('click', function(e) {
+      var lat = e.latlng.lat,
+          lon = e.latlng.lng;
+
+//      var buildingUrl = "http://api.citysdk.waag.org/layers/bag.pand/objects?lat=" + lat.toFixed(4)
+//           + "&lon=" + lon.toFixed(4) + "&per_page=1&radius=" + 100;
+
+//      d3.json(buildingUrl, function(geojson) {
+
+        // Reset data:
+//        d3.select("#admr-naam").html("");
+//        d3.select("#cbs-oppervlakte").html("");
+//        d3.select("#cbs-inwoners").html("");
+
+//        d3.select("#pand-bouwjaar").html("");
+
+//        d3.select("#vbo-adres").html("");
+//        d3.select("#vbo-postcode").html("");
+//        d3.select("#vbo-plaats").html("");
+//        d3.select("#vbo-oppervlakte").html("");
+//        d3.select("#vbo-gebruiksdoel").html("");
+
+        if (geojson && geojson.features && geojson.features.length > 0) {
+          var buildingData = geojson.features[0].properties.layers["bag.pand"].data;
+
+          d3.select("#pand-bouwjaar").html(buildingData.bouwjaar);
+
+          var admrUrl = "http://api.citysdk.waag.org/layers/admr/objects?contains=bag.pand." + buildingData.id
+              + "&admr::admn_level=3&geom=false&layer=cbs";
+
+          d3.json(admrUrl, function(geojson) {
+              if (geojson && geojson.features && geojson.features.length > 0) {
+                var admrData = geojson.features[0].properties.layers["admr"].data,
+                    cbsData = geojson.features[0].properties.layers["cbs"].data;
+
+                d3.select("#admr-naam").html(admrData.gemeentenaam);
+                d3.select("#cbs-oppervlakte").html(formatNumber(cbsData.opp_tot / 100) + " km&#178;");
+                d3.select("#cbs-inwoners").html(formatNumber(cbsData.aant_inw));
+              }
+          });
+
+          var addressUrl = "http://api.citysdk.waag.org/layers/bag.vbo/objects?bag.vbo::pand_ids=" + buildingData.id;
+
+          d3.json(addressUrl, function(geojson) {
+
+            if (geojson && geojson.features && geojson.features.length > 0) {
+              var addressData = geojson.features[0].properties.layers["bag.vbo"].data;
+
+              var purpose = "";
+              switch (addressData.gebruiksdoel) {
+              case "woonfunctie":
+                purpose = "House";
+                break;
+              case "gezondheidszorgfunctie":
+                purpose = "Healthcare";
+                break;
+              case "logiesfunctie":
+                purpose = "Hotel";
+                break;
+              case "industriefunctie":
+                purpose = "Industry";
+                break;
+              case "onderwijsfunctie":
+                purpose = "Education";
+                break;
+              case "sportfunctie":
+                purpose = "Sport";
+                break;
+              case "kantoorfunctie":
+                purpose = "Office";
+                break;
+              case "celfunctie":
+                purpose = "Detention";
+                break;
+              case "bijeenkomstfunctie":
+                purpose = "Public";
+                break;
+              case "winkelfunctie":
+                purpose = "Retail";
+                break;
+              case "overige gebruiksfunctie":
+                purpose = "Other";
+                break;
+              }
+
+              var addess = addressData.straat + " " + addressData.huisnummer
+
+              if (addressData.toevoeging) {
+                address += addressData.toevoeging;
+              }
+
+              d3.select("#vbo-adres").html(addess);
+              d3.select("#vbo-postcode").html(addressData.postcode);
+              d3.select("#vbo-plaats").html(addressData.woonplaats);
+              d3.select("#vbo-oppervlakte").html(formatNumber(addressData.oppervlakte) + " m&#178;");
+              d3.select("#vbo-gebruiksdoel").html(purpose);
+            }
+          });
+        }
+//      });
+
+    });
+
+    d3.select("#close").on("click", function() {
+      var closed = d3.select(this).classed("closed");
+
+      d3.select("#box")
+          .classed("hidden", closed)
+          .transition()
+          .duration(150)
+          .style("opacity", closed ? 1 : 0)
+          .each("end", function() { d3.select(this).classed("hidden", !closed); });
+
+      d3.select(this).classed("closed", !closed);
+    });
+
+    window.onhashchange = function() {
+      if (!disableHashChange) {
+        var hash = window.location.hash.split(",");;
+        if (hash.length == 3) {
+          var lat = parseFloat(hash[0].substring(1)), // Remove "#"
+              lon = parseFloat(hash[1]),
+              zoom = parseInt(hash[2]);
+
+          map.setView([lat, lon], zoom);
+        }
+      }
+      disableHashChange = false;
+    }
+
+    window.onhashchange();
+
+    function roundLatLon(l) {
+      return Math.round(l * 10000) / 10000;
+    }
+
+    function formatNumber(x) {
+      x = x.toString();
+      var pattern = /(-?\d+)(\d{3})/;
+      while (pattern.test(x))
+        x = x.replace(pattern, "$1,$2");
+      return x;
+    }
+
+	</script>
+</body>
+</html>
