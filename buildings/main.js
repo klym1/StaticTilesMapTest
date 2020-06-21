@@ -1,4 +1,4 @@
-var baseAddress = "https://map.klym.uk/"
+var baseAddress = "https://map.klym.uk/";
 
 var disableHashChange = false;
 var map = L.map('map', 
