@@ -16,12 +16,6 @@ body {
 	display: none;
 }
 
-@font-face {
-  font-family: 'FPL Neu';
-  font-style: italic;
-  font-weight: bold;
-  src: url('/buildings/fonts/fp9bi8a.otf')
-}
 
 .map {
   right: 0px;
@@ -90,57 +84,9 @@ h1 {
   font-style: italic;
 }
 
-#box h2 {
-  font-size: 24px;
-  font-style: italic;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-#box #info h2 {
-  margin-top: 0;
-}
-
-.help {
-  padding-left: 10px;
-  color: #999;
-  font-size: 90%;
-  font-weight:normal;
-}
-
 h3 {
   margin: 0px 0;
   text-align: right;
-}
-
-#box h2:before,
-#box h2:after {
-  position:relative;
-  top: -4px;
-}
-
-#box h2:before {
-  content:url('/buildings/images/tilde_left.png');
-  left: -4px;
-}
-
-#box h2:after {
-  content:url('/buildings/images/tilde_right.png');
-  left: 4px;
-}
-
-#box h2 {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-
-#waag img {
-  margin-top: 15px;
-  margin-bottom: 0px;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
 }
 
 #legend table tr td {
@@ -196,42 +142,6 @@ td {
   display: none;
 }
 
-.close.closed {
-  background-image: url('/buildings/images/i.png');
-}
-
-.close:before {
-  display: block;
-  left: 0;
-  line-height: 20px;
-  position: absolute;
-  top: -2px;
-  width: 20px;
-}
-
-.close {
-  background-image: url('/buildings/images/x.png');
-  background-position: center center;
-  background-color: black;
-  background-repeat: no-repeat;
-
-  position: fixed;
-  top: 10px;
-  right: 10px;
-
-  border: 2.27273px solid #FFFFFF;
-  border-radius: 20px 20px 20px 20px;
-  box-shadow: 0 0 6px #000000, 1.63636px 1.63636px 1.63636px rgba(0, 0, 0, 0.3), -1.63636px 1.63636px 1.63636px rgba(0, 0, 0, 0.3), 1.63636px -1.63636px 1.63636px rgba(0, 0, 0, 0.3), -1.63636px -1.63636px 1.63636px rgba(0, 0, 0, 0.3);
-  color: #FFFFFF;
-  cursor: pointer;
-  display: block;
-  height: 0;
-  overflow: hidden;
-  padding: 20px 0 0;
-  width: 20px;
-  z-index: 999;
-}
-
 #sections {
 	width: 100%;
 	height: 100%;
@@ -281,4 +191,159 @@ td {
 	top: 50%;
 }
 
+
+#legend {
+    z-index: 1000;
+    width: 205px;
+    height: 150px;
+    position: absolute;
+    bottom: 0px;
+    right:0px;
+                background-color: rgba(0, 0, 0, .75);
+    font-family: sans-serif;
+    font-size: 0px;
+    color: rgb(177, 241, 253);
+    text-transform: uppercase;
+    padding: 5px 5px 5px 5px;
+}
+
+#info {
+   z-index: 1000;
+    width: 405px;
+    height: 150px;
+    position: absolute;
+    bottom: 0px;
+    right:215px;
+                background-color: rgba(0, 0, 0, .75);
+    font-family: sans-serif;
+    font-size: 0px;
+    color: rgb(177, 241, 253);
+    text-transform: uppercase;
+    padding: 5px 5px 5px 5px;
+}
+
+#legend ul {
+    list-style: none;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+#legend li {
+    list-style-image: none;
+    color: #fff;
+    font-size: 11px;
+    display: block;
+    margin-right: -60px;
+    margin-bottom: -2px;
+}
+
+#legend p {
+    display: inline;
+    float: bottom;
+    position: relative;
+    top: -4px;
+    left: 5px;
+}
+
+#legend span {
+    height: 15px;
+    width: 30px;
+    display: inline-block;
+}
+
+#navleft {
+    min-height: 30px;
+    padding: 10px 5px 5px 10px;
+    position: relative;
+    background-color: rgba(100, 100, 100, 0.75);
+    width: 600px;
+}
+
+#navleft span {
+    font-family: 'Signika Negative', sans-serif;
+    color: #fff;
+    font-size: 24px;
+    font-variant: bold;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+#navright {
+    min-height: 30px;
+    height: 70px;
+    padding: 10px 5px 5px 10px;
+    position: relative;
+    z-index: 1000;
+    text-align: right;
+}
+
+#navright span {
+    font-family: 'Signika Negative', sans-serif;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+#navright span strong {
+    color: #B1F1FD;
+}
+
+#footer {
+    min-height: 10px;
+    width: auto;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 1000;
+    padding: 0px 5px 0px 5px;
+}
+
+#footer p {
+    font-family: 'Signika Negative', sans-serif;
+    color: #fff;
+    font-size: 9px;
+    font-variant: bold;
+    letter-spacing: 1px;
+    display: inline-block;
+}
+
+#footer p strong {
+    color: #B1F1FD;
+}
+
+#footer a {
+    color: #B1F1FD;
+    text-decoration: none;
+}
+
+#footer a:hover {
+    color: #B1F1FD;
+    text-decoration: underline;
+}
+
+#footer a:active {
+    color: yellow;
+    text-decoration: underline;
+}
+
+
+
+.leaflet-bottom.leaflet-right {
+    margin-bottom: 20px;
+}
+
+       
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
 
