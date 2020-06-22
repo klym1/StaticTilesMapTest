@@ -36,6 +36,12 @@ function onEachFeature(feature, layer) {
 
 function zoomToFeature(e) {
     map.fitBounds(e.target.getBounds());
+
+    if (e.target.feature.properties) {
+        info.update(e.target.feature.properties);
+    } else {
+        info.update();
+    }
 }
 
  var geojsonLayer = new L.geoJson.ajax(baseAddress + "buildings/tiles/buildings.geojson", {
