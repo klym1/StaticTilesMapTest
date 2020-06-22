@@ -94,8 +94,8 @@ var tileLayer = L.tileLayer(tileUrl, {
 tileLayer.addTo(map);
 
 map.setMaxBounds([
-  [48.9313,24.7254],
-  [48.9078,24.6889]
+  [48.9913,24.814],
+  [48.8778,24.6189]
 ]);
 
 map.setView([48.9228, 24.7103], 16);
