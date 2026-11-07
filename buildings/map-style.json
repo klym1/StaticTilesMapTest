@@ -10,7 +10,7 @@
     },
     "historic": {
       "type": "geojson",
-      "data": "https://map.klym.uk/buildings/tiles/buildings.geojson"
+      "data": "/buildings/data/buildings.geojson"
     }
   },
   "layers": [
