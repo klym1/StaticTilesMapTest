@@ -320,8 +320,10 @@ def main():
         'osm_timestamp': osm.get('osm3s', {}).get('timestamp_osm_base'),
         'features': features,
     }
-    GEOJSON_PATH.write_text(json.dumps(collection, ensure_ascii=False, separators=(',', ':')) + '\n',
-                            encoding='utf-8')
+    text = json.dumps(collection, ensure_ascii=False, indent=2)
+    # Keep each [lon, lat] pair on one line so the file stays readable.
+    text = re.sub(r'\[\s+(-?[\d.]+),\s+(-?[\d.]+)\s+\]', r'[\1, \2]', text)
+    GEOJSON_PATH.write_text(text + '\n', encoding='utf-8')
 
     print(f'{len(features)} of {len(rows)} rows matched to OSM buildings -> {GEOJSON_PATH.relative_to(ROOT)}')
     if notes:
