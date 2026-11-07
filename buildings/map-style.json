@@ -1,0 +1,90 @@
+{
+  "version": 8,
+  "name": "Stanyslaviv buildings",
+  "glyphs": "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf",
+  "sources": {
+    "openmaptiles": {
+      "type": "vector",
+      "url": "https://tiles.openfreemap.org/planet",
+      "attribution": "<a href=\"https://openfreemap.org\">OpenFreeMap</a> &copy; <a href=\"https://www.openmaptiles.org/\">OpenMapTiles</a> &copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>"
+    },
+    "historic": {
+      "type": "geojson",
+      "data": "https://map.klym.uk/buildings/tiles/buildings.geojson"
+    }
+  },
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": { "background-color": "#001420" }
+    },
+    {
+      "id": "other-buildings",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "building",
+      "paint": {
+        "fill-color": "#c0e0f8",
+        "fill-opacity": 0.1
+      }
+    },
+    {
+      "id": "roads",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "transportation",
+      "filter": ["!", ["in", ["get", "class"], ["literal", ["rail", "transit", "ferry", "aerialway"]]]],
+      "layout": { "line-join": "round", "line-cap": "round" },
+      "paint": {
+        "line-color": "#168",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 14, 0.8, 18, 2]
+      }
+    },
+    {
+      "id": "historic-buildings",
+      "type": "fill",
+      "source": "historic",
+      "paint": {
+        "fill-color": [
+          "step", ["get", "year"],
+          "#a50f15",
+          1800, "#de2d26",
+          1850, "#fb6a4a",
+          1875, "#fc9272",
+          1900, "#fcbba1",
+          1920, "#0575b4",
+          1930, "#74add1"
+        ]
+      }
+    },
+    {
+      "id": "historic-buildings-hover",
+      "type": "line",
+      "source": "historic",
+      "paint": {
+        "line-color": "#168",
+        "line-width": 3,
+        "line-opacity": ["case", ["boolean", ["feature-state", "hover"], false], 1, 0]
+      }
+    },
+    {
+      "id": "road-labels",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "transportation_name",
+      "layout": {
+        "symbol-placement": "line",
+        "text-field": ["coalesce", ["get", "name:uk"], ["get", "name"]],
+        "text-font": ["Noto Sans Bold"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 14, 9, 18, 13],
+        "text-max-angle": 30
+      },
+      "paint": {
+        "text-color": "#ffffff",
+        "text-halo-color": "#001420",
+        "text-halo-width": 1
+      }
+    }
+  ]
+}

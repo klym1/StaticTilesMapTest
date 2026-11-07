@@ -138,9 +138,7 @@ td {
   padding-right: 15px;
 }
 
-.leaflet-control-attribution {
-  display: none;
-}
+
 
 #sections {
 	width: 100%;
@@ -329,9 +327,7 @@ td {
 
 
 
-.leaflet-bottom.leaflet-right {
-    margin-bottom: 20px;
-}
+
 
        
 .info {
