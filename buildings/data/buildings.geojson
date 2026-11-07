@@ -335,7 +335,7 @@
       "type": "Feature",
       "id": 13,
       "properties": {
-        "street": "Богунська, 3",
+        "street": "Гриневичів, 3",
         "year": 1910,
         "description": "Житловий будинок",
         "osm": "way/338163088"
@@ -1454,7 +1454,7 @@
       "type": "Feature",
       "id": 53,
       "properties": {
-        "street": "Гаркуші, 3",
+        "street": "Михайла Мулика, 3",
         "year": 1905,
         "description": "Житловий будинок",
         "osm": "way/206000754"
@@ -1478,7 +1478,7 @@
       "type": "Feature",
       "id": 54,
       "properties": {
-        "street": "Гаркуші, 7",
+        "street": "Михайла Мулика, 7",
         "year": 1898,
         "description": "Житловий будинок",
         "osm": "way/206000782"
@@ -1504,7 +1504,7 @@
       "type": "Feature",
       "id": 55,
       "properties": {
-        "street": "Гаркуші, 8",
+        "street": "Михайла Мулика, 8",
         "year": 1905,
         "description": "Житловий будинок",
         "osm": "way/206000730"
@@ -1528,7 +1528,7 @@
       "type": "Feature",
       "id": 56,
       "properties": {
-        "street": "Гаркуші, 9",
+        "street": "Михайла Мулика, 9",
         "year": 1910,
         "description": "Житловий будинок",
         "osm": "way/206000788"
@@ -5176,7 +5176,7 @@
       "type": "Feature",
       "id": 194,
       "properties": {
-        "street": "Лермонтова, 7",
+        "street": "Героїв Маріуполя, 7",
         "year": 1910,
         "description": "Житловий будинок",
         "osm": "way/338163143"
@@ -5201,7 +5201,7 @@
       "type": "Feature",
       "id": 195,
       "properties": {
-        "street": "Лермонтова, 8",
+        "street": "Героїв Маріуполя, 8",
         "year": 1910,
         "description": "Житловий будинок",
         "osm": "way/338163145"
@@ -5226,7 +5226,7 @@
       "type": "Feature",
       "id": 196,
       "properties": {
-        "street": "Лермонтова, 13",
+        "street": "Героїв Маріуполя, 13",
         "year": 1910,
         "description": "Житловий будинок",
         "osm": "way/338163139"
@@ -6439,7 +6439,7 @@
       "type": "Feature",
       "id": 243,
       "properties": {
-        "street": "Мельничука, 14",
+        "street": "Левка Лук'яненка, 14",
         "year": 1842,
         "description": "Будинок повітового староства",
         "osm": "way/205674030"
@@ -9004,7 +9004,7 @@
       "type": "Feature",
       "id": 339,
       "properties": {
-        "street": "Рєпіна, 8",
+        "street": "Миколи Арсенича-Березовського, 8",
         "year": 1910,
         "description": "Житловий будинок",
         "osm": "way/206000813"
@@ -9033,7 +9033,7 @@
       "type": "Feature",
       "id": 340,
       "properties": {
-        "street": "Рєпіна, 10",
+        "street": "Миколи Арсенича-Березовського, 10",
         "year": 1910,
         "description": "Житловий будинок",
         "osm": "way/206000731"
@@ -9458,7 +9458,7 @@
       "type": "Feature",
       "id": 357,
       "properties": {
-        "street": "Академіка Сахарова , 9",
+        "street": "Української Перемоги, 9",
         "year": 1905,
         "description": "Житловий будинок",
         "osm": "way/264435015"
@@ -9480,7 +9480,7 @@
       "type": "Feature",
       "id": 358,
       "properties": {
-        "street": "Академіка Сахарова , 11",
+        "street": "Української Перемоги, 11",
         "year": 1905,
         "description": "Житловий будинок",
         "osm": "way/344909188"
@@ -9521,7 +9521,7 @@
       "type": "Feature",
       "id": 359,
       "properties": {
-        "street": "Академіка Сахарова , 15",
+        "street": "Української Перемоги, 15",
         "year": 1911,
         "description": "Окружний суд",
         "osm": "way/344909065"
@@ -9573,7 +9573,7 @@
       "type": "Feature",
       "id": 360,
       "properties": {
-        "street": "Академіка Сахарова , 17",
+        "street": "Української Перемоги, 17",
         "year": 1933,
         "description": "Житловий будинок",
         "osm": "way/345127735"
@@ -9600,7 +9600,7 @@
       "type": "Feature",
       "id": 361,
       "properties": {
-        "street": "Академіка Сахарова , 19",
+        "street": "Української Перемоги, 19",
         "year": 1910,
         "description": "Житловий будинок",
         "osm": "way/345127709"
@@ -9628,7 +9628,7 @@
       "type": "Feature",
       "id": 362,
       "properties": {
-        "street": "Академіка Сахарова , 20",
+        "street": "Української Перемоги, 20",
         "year": 1886,
         "description": "Житловий будинок",
         "osm": "way/343511567"
@@ -10994,7 +10994,7 @@
       "type": "Feature",
       "id": 411,
       "properties": {
-        "street": "Толстого, 1",
+        "street": "Героїв Києва, 1",
         "year": 1914,
         "description": "Житловий будинок",
         "osm": "way/270342271"
@@ -12849,7 +12849,7 @@
       "type": "Feature",
       "id": 483,
       "properties": {
-        "street": "Шеремети, 2",
+        "street": "Олени Степанів, 2",
         "year": 1750,
         "description": "\"Кам'яниця двірська\"",
         "osm": "way/1203550793"
@@ -12875,7 +12875,7 @@
       "type": "Feature",
       "id": 484,
       "properties": {
-        "street": "Шеремети, 4",
+        "street": "Олени Степанів, 4",
         "year": 1750,
         "description": "\"Кам'яниця двірська\"",
         "osm": "way/205658415"
@@ -12897,7 +12897,7 @@
       "type": "Feature",
       "id": 485,
       "properties": {
-        "street": "Шеремети, 6",
+        "street": "Олени Степанів, 6",
         "year": 1785,
         "description": "Житловий будинок",
         "osm": "relation/19033635"
@@ -13878,7 +13878,7 @@
       "type": "Feature",
       "id": 517,
       "properties": {
-        "street": "Мельничука, 1",
+        "street": "Левка Лук'яненка, 1",
         "year": 1816,
         "description": "Житловий будинок",
         "osm": "way/427830670"
@@ -14340,7 +14340,7 @@
       "type": "Feature",
       "id": 535,
       "properties": {
-        "street": "Мельничука, 3",
+        "street": "Левка Лук'яненка, 3",
         "year": 1850,
         "description": "Житловий будинок",
         "osm": "way/427830657"
