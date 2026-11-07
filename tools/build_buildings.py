@@ -92,7 +92,7 @@ def fetch_osm(save_to=None):
     s, w, n, e = BBOX
     bbox = f'({s},{w},{n},{e})'
     query = (f'[out:json][timeout:180];'
-             f'(way[building]{bbox};relation[building]{bbox};);out geom;'
+             f'(way[building][building!=no]{bbox};relation[building][building!=no]{bbox};);out geom;'
              # Street relations: many buildings here carry only a house number
              # and get their street name from one of these.
              f'(relation[type=associatedStreet]{bbox};relation[type=street]{bbox};);out body;')
@@ -205,7 +205,7 @@ def build_index(osm):
     elements = {}
     for el in osm['elements']:
         tags = el.get('tags', {})
-        if 'building' not in tags:
+        if tags.get('building', 'no') == 'no':      # building=no marks e.g. school grounds
             continue
         ref = f"{el['type']}/{el['id']}"
         elements[ref] = el
