@@ -3,9 +3,9 @@
 
 The CSV is the list you edit by hand:
 
-    address,year,description,osm,source
-    "Галицька, 1",1933,Житловий будинок,,council
-    "Левка Лук'яненка, 14",1842,Будинок повітового староства,way/205674030,wikipedia
+    address,year,description,osm,source,url
+    "Галицька, 1",1933,Житловий будинок,,council,https://orada.if.ua/decision/1455-35/
+    "Левка Лук'яненка, 14",1842,Будинок повітового староства,way/205674030,wikipedia,https://uk.wikipedia.org/wiki/...
 
 For every row the script finds the matching building in OpenStreetMap by its
 address (street + house number). The optional `osm` column pins a row to a
@@ -28,8 +28,9 @@ the sources write it:
 
 The map shows the date as written and colors the building by a year inside it.
 
-The `source` column records where the row comes from; the script only copies it
-into buildings.geojson. Values used so far:
+The `source` column records where the row comes from, and `url` links to that
+source's page (filled for council and wikipedia rows); the script only copies
+both into buildings.geojson. Values used so far:
 
     council         the regional council's monuments list, decision 1455-35/2020
                     (https://orada.if.ua/decision/1455-35/); outranks Wikipedia
@@ -378,6 +379,7 @@ def main():
                 'description': (row.get('description') or '').strip(),
                 'osm': ref,
                 'source': (row.get('source') or '').strip(),
+                'url': (row.get('url') or '').strip(),
             },
             'geometry': geom,
         })
