@@ -26,6 +26,8 @@ function update(props) {
   document.getElementById('streetname').innerText = props ? props.street || '' : '';
   document.getElementById('start_date').innerText = props ? props.date || props.year || '' : '';
   document.getElementById('description').innerText = props ? props.description || '' : '';
+  // On phones the info box is only shown while a building is selected.
+  document.getElementById('info').classList.toggle('has-info', !!props);
 }
 
 // ---- Hover / click on historic buildings ----
@@ -42,23 +44,34 @@ function setHovered(id) {
   }
 }
 
-map.on('mousemove', 'historic-buildings', function(e) {
-  var feature = e.features[0];
-  map.getCanvas().style.cursor = 'pointer';
-  if (feature.id !== hoveredId) {
-    setHovered(feature.id);
-    update(feature.properties);
+// Hover only where the pointer can hover (mouse); on touch screens a tap selects.
+var canHover = window.matchMedia('(hover: hover)').matches;
+
+if (canHover) {
+  map.on('mousemove', 'historic-buildings', function(e) {
+    var feature = e.features[0];
+    map.getCanvas().style.cursor = 'pointer';
+    if (feature.id !== hoveredId) {
+      setHovered(feature.id);
+      update(feature.properties);
+    }
+  });
+
+  map.on('mouseleave', 'historic-buildings', function() {
+    map.getCanvas().style.cursor = '';
+    setHovered(null);
+    update();
+  });
+}
+
+map.on('click', function(e) {
+  var feature = map.queryRenderedFeatures(e.point, { layers: ['historic-buildings'] })[0];
+  if (!feature) {            // tap/click on empty map clears the selection
+    setHovered(null);
+    update();
+    return;
   }
-});
-
-map.on('mouseleave', 'historic-buildings', function() {
-  map.getCanvas().style.cursor = '';
-  setHovered(null);
-  update();
-});
-
-map.on('click', 'historic-buildings', function(e) {
-  var feature = e.features[0];
+  setHovered(feature.id);
   update(feature.properties);
   map.fitBounds(geometryBounds(feature.geometry), { padding: 40, maxZoom: map.getMaxZoom() });
 });
