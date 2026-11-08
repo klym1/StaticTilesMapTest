@@ -12,7 +12,22 @@ address (street + house number). The optional `osm` column pins a row to a
 specific OSM object (`way/123` or `relation/123`); use it when the address
 can't be found or matches the wrong building, e.g. after a street rename.
 
-It then writes the current OSM outline of each building, with your year and
+The `year` column takes an exact year or an approximate date, written the way
+the sources write it:
+
+    1912            exact year
+    1912–1938       years of construction (colored by the first year)
+    1920-ті         a decade
+    бл. 1910        about 1910
+    до 1768         before 1768
+    к. 19 ст.       п. = early, с. = mid, к. = late; also "19 ст.",
+    п. 20 ст.       "1-а пол. 19 ст." / "2-а пол. 19 ст." (first/second half)
+    к. 19 – п. 20 ст.
+    к. 19 ст. – 1903
+
+The map shows the date as written and colors the building by a year inside it.
+
+It then writes the current OSM outline of each building, with your date and
 description, to buildings.geojson, which the map draws. Never edit that file
 by hand: change the CSV and run the script again (also to pick up OSM edits).
 
@@ -82,6 +97,46 @@ def norm_number(num):
     s = num.strip().lower().translate(LATIN_TO_CYR)
     s = re.sub(r'(\d)\s*[-‐–]?\s*([^\d\s/;,\-])', r'\1\2', s)
     return re.sub(r'\s+', '', s)
+
+
+CENTURY_PART = {'п': (0, 35), 'с': (30, 70), 'к': (65, 99), '1-а пол': (0, 50), '2-а пол': (50, 99), '': (0, 99)}
+
+
+def _date_part(s):
+    """Year range of one date part: '1912', '1920-ті', 'к. 19 ст.' -> (lo, hi)."""
+    s = s.strip()
+    m = re.fullmatch(r'(?:бл\.\s*|до\s+)?(\d{4})', s)
+    if m:
+        y = int(m.group(1))
+        return y, y            # 'до 1768' is colored by its own year
+    m = re.fullmatch(r'(\d{3})0-ті', s)
+    if m:
+        y = int(m.group(1)) * 10
+        return y, y + 9
+    m = re.fullmatch(r'(п|с|к|1-а пол|2-а пол)?\.?\s*(\d{2})(?:\s*ст\.?)?', s)
+    if m:
+        base = (int(m.group(2)) - 1) * 100
+        lo, hi = CENTURY_PART[m.group(1) or '']
+        return base + lo, base + hi
+    return None
+
+
+def parse_date(text):
+    """'к. 19 ст.' -> (year used for the map color, text shown on the map).
+
+    An exact year or a construction range ('1912–1938') is colored by its
+    (first) year; an approximate date by the middle of its range."""
+    text = re.sub(r'\s+', ' ', text.strip())
+    if re.fullmatch(r'\d{4}', text):
+        return int(text), text
+    m = re.fullmatch(r'(\d{4})\s*[–-]\s*(\d{4})', text)
+    if m:
+        return int(m.group(1)), f'{m.group(1)}–{m.group(2)}'
+    parts = [_date_part(p) for p in re.split(r'\s+[–-]\s+', text)]
+    if not parts or None in parts:
+        return None, None
+    lo, hi = min(p[0] for p in parts), max(p[1] for p in parts)
+    return (lo + hi + 1) // 2, text
 
 
 def split_numbers(value):
@@ -274,10 +329,9 @@ def main():
     for line, row in enumerate(rows, start=2):           # line 1 is the header
         address = (row.get('address') or '').strip()
         pinned = (row.get('osm') or '').strip()
-        try:
-            year = int(row['year'])
-        except (KeyError, ValueError):
-            problems.append((line, address, f"year '{row.get('year')}' is not a number"))
+        year, date_text = parse_date(row.get('year') or '')
+        if year is None:
+            problems.append((line, address, f"can't read the date '{row.get('year')}' (see the list of formats at the top of this script)"))
             continue
         if pinned:
             if not re.match(r'^(way|relation)/\d+$', pinned):
@@ -308,6 +362,7 @@ def main():
             'properties': {
                 'street': address,
                 'year': year,
+                'date': date_text,
                 'description': (row.get('description') or '').strip(),
                 'osm': ref,
             },

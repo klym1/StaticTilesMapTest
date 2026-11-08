@@ -24,7 +24,7 @@ map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-ri
 
 function update(props) {
   document.getElementById('streetname').innerText = props ? props.street || '' : '';
-  document.getElementById('start_date').innerText = props ? props.year || '' : '';
+  document.getElementById('start_date').innerText = props ? props.date || props.year || '' : '';
   document.getElementById('description').innerText = props ? props.description || '' : '';
 }
 
