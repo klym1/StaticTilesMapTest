@@ -193,7 +193,7 @@ td {
 #legend {
     z-index: 1000;
     width: 205px;
-    height: 150px;
+    height: auto;
     position: absolute;
     bottom: 0px;
     right:0px;
@@ -202,7 +202,7 @@ td {
     font-size: 0px;
     color: rgb(177, 241, 253);
     text-transform: uppercase;
-    padding: 5px 5px 5px 5px;
+    padding: 5px 5px 20px 5px;      /* keep the last row above the footer */
 }
 
 #info {
@@ -254,7 +254,10 @@ td {
     padding: 10px 5px 5px 10px;
     position: relative;
     background-color: rgba(100, 100, 100, 0.75);
-    width: 600px;
+    width: max-content;
+    max-width: calc(100vw - 15px);
+    white-space: nowrap;
+    padding-right: 15px;
 }
 
 #navleft span {

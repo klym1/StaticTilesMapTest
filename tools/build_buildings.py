@@ -20,6 +20,7 @@ the sources write it:
     1920-ті         a decade
     бл. 1910        about 1910
     до 1768         before 1768
+    після 1991      after 1991
     к. 19 ст.       п. = early, с. = mid, к. = late; also "19 ст.",
     п. 20 ст.       "1-а пол. 19 ст." / "2-а пол. 19 ст." (first/second half)
     к. 19 – п. 20 ст.
@@ -105,10 +106,10 @@ CENTURY_PART = {'п': (0, 35), 'с': (30, 70), 'к': (65, 99), '1-а пол': (0
 def _date_part(s):
     """Year range of one date part: '1912', '1920-ті', 'к. 19 ст.' -> (lo, hi)."""
     s = s.strip()
-    m = re.fullmatch(r'(?:бл\.\s*|до\s+)?(\d{4})', s)
+    m = re.fullmatch(r'(?:бл\.\s*|до\s+|після\s+)?(\d{4})', s)
     if m:
         y = int(m.group(1))
-        return y, y            # 'до 1768' is colored by its own year
+        return y, y            # 'до 1768' / 'після 1991' are colored by their own year
     m = re.fullmatch(r'(\d{3})0-ті', s)
     if m:
         y = int(m.group(1)) * 10
